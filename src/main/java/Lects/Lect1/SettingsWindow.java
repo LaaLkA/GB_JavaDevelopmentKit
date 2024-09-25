@@ -25,7 +25,11 @@ public class SettingsWindow extends JFrame {
     JTextField fldHeightMap = new JTextField();
     JTextField fldWinLen = new JTextField();
 
+    private GameWindow gameWindow;
+
     SettingsWindow(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+
         setLocationRelativeTo(gameWindow);
         setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -34,15 +38,7 @@ public class SettingsWindow extends JFrame {
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cntColMap = Integer.parseInt(fldWidthMap.getText());
-                cntRowsMap = Integer.parseInt(fldHeightMap.getText());
-                winLen = Integer.parseInt(fldWinLen.getText());
-                //Заглушка, что все 3 занчения должны быть одинаковые из-за метода checkWin
-                if(cntColMap != cntRowsMap && cntColMap != winLen) return;
-
-                gameWindow.startNewGame(MODE,cntColMap,cntRowsMap,winLen);
-                int height = Integer.parseInt(fldHeightMap.getText());
-                setVisible(false);
+               startNewGame();
             }
         });
 
@@ -70,5 +66,16 @@ public class SettingsWindow extends JFrame {
         add(panWinLen);
         add(panMode);
         add(panStart);
+    }
+
+    private void startNewGame(){
+        cntColMap = Integer.parseInt(fldWidthMap.getText());
+        cntRowsMap = Integer.parseInt(fldHeightMap.getText());
+        winLen = Integer.parseInt(fldWinLen.getText());
+        //Заглушка, что все 3 занчения должны быть одинаковые из-за метода checkWin
+        if(cntColMap != cntRowsMap || winLen != cntRowsMap || cntColMap < 3) return;
+
+        gameWindow.startNewGame(MODE, cntColMap,cntRowsMap,winLen);
+        setVisible(false);
     }
 }
