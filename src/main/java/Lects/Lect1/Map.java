@@ -23,8 +23,14 @@ public class Map extends JPanel {
     private final int AI_DOT = 2;
     private final int EMPTY_DOT = 0;
 
-    private int fieldSizeY = 3;
-    private int fieldSizeX = 3;
+    //Дополнение
+    private int mode;
+    private int winLen;
+    private int cntColMap;
+    private int cntRowsMap;
+
+    private int fieldSizeY;
+    private int fieldSizeX;
     private char[][] field;
 
     private int panelWidth;
@@ -56,15 +62,15 @@ public class Map extends JPanel {
 
         panelHeight = getHeight();
         panelWidth = getWidth();
-        cellHeight = panelHeight / 3;
-        cellWidth = panelWidth / 3;
+        cellHeight = panelHeight / cntRowsMap;
+        cellWidth = panelWidth / cntColMap;
 
         g.setColor(Color.BLACK);
-        for (int h = 0; h < 3; h++) {
+        for (int h = 0; h < cntRowsMap; h++) {
             int y = h * cellHeight;
             g.drawLine(0, y, panelWidth, y);
         }
-        for (int w = 0; w < 3; w++) {
+        for (int w = 0; w < cntColMap; w++) {
             int x = w * cellWidth;
             g.drawLine(x, 0, x, panelHeight);
         }
@@ -108,7 +114,13 @@ public class Map extends JPanel {
     }
 
     void startNewGame(int mode, int fSzX, int fSzY, int wLen) {
-        System.out.printf("Mode %s", mode);
+        this.mode = mode;
+        this.cntColMap = fSzX;
+        this.cntRowsMap = fSzY;
+        this.winLen = wLen;
+        this.fieldSizeX = fSzX;
+        this.fieldSizeY = fSzY;
+
         initMap();
         isGameOver = false;
         isInitialized = true;
@@ -149,8 +161,6 @@ public class Map extends JPanel {
      */
 
     private void initMap() {
-        fieldSizeY = 3;
-        fieldSizeX = 3;
         field = new char[fieldSizeY][fieldSizeX];
         for (int i = 0; i < fieldSizeY; i++) {
             for (int j = 0; j < fieldSizeX; j++) {
@@ -177,17 +187,34 @@ public class Map extends JPanel {
     }
 
     private boolean checkWin(char c) {
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+        boolean winMainDiag = true;
+        boolean winSecDiag = true;
 
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+        //Проверка линий по вертикали и горизонтали
+        for (int i = 0; i < field.length; i++) {
+            boolean winCol = true;
+            boolean winRow = true;
+            for (int j = 0; j < field.length; j++) {
+                if (field[i][j] != c) winRow = false;
+                if (field[j][i] != c) winCol = false;
+            }
+            if (winCol || winRow) return true;
+        }
+        // Проверка главной и побочной диагонали
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][i] != c) {
+                winMainDiag = false;
+                break;
+            }
+        }
 
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[0][2] == c && field[1][1] == c && field[2][0] == c) return true;
-        return false;
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][field.length - 1 - i] != c) {
+                winSecDiag = false;
+                break;
+            }
+        }
+        return winMainDiag || winSecDiag;
     }
 
     private boolean isMapFull() {
