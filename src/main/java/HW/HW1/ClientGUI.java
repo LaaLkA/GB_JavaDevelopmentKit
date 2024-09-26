@@ -92,6 +92,7 @@ public class ClientGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!flagUserAuth) return;
                 userMessage = fieldMessage.getText();
+                fieldMessage.setText("");
                 serverWindow.addMessage(userName + ": " + userMessage);
                 updateHistoryOfMessages();
             }
@@ -102,6 +103,7 @@ public class ClientGUI extends JFrame {
     }
 
     public void updateHistoryOfMessages() {
+        if (!flagUserAuth) return;
         historyOfMessages = serverWindow.getHistoryOfMessages();
         StringBuilder fullHistoryOfMessagesOnArea = new StringBuilder();
         for (String message : historyOfMessages)
