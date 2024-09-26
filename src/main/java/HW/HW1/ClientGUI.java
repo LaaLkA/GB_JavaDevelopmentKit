@@ -23,7 +23,8 @@ public class ClientGUI extends JFrame {
     private ArrayList<String> historyOfMessages;
 
     JButton btnLogin, btnSend;
-    JTextField fieldLogin, fieldPassword, fieldMessage, fieldIp, fieldPort;
+    JTextField fieldLogin, fieldMessage, fieldIp, fieldPort;
+    JPasswordField fieldPassword;
     JPanel panSendMessage, panAuth, panServer, panTop;
     JTextArea areaHistoryOfMessages;
 
@@ -42,7 +43,7 @@ public class ClientGUI extends JFrame {
         fieldPort.setEditable(false);
 
         fieldLogin = new JTextField();
-        fieldPassword = new JTextField();
+        fieldPassword = new JPasswordField();
         fieldMessage = new JTextField();
 
         btnLogin = new JButton("Login");
