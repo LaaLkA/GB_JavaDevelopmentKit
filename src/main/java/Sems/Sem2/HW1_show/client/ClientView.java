@@ -1,5 +1,18 @@
 package Sems.Sem2.HW1_show.client;
 
+
+/**
+ * Интерфейс описывающий абстракцию GUI
+ */
 public interface ClientView {
-    void sendMessage(String message);
+    /**
+     * Метод для отображения сообщения в GUI
+     * @param message текст сообщения
+     */
+    void showMessage(String message);
+
+    /**
+     * Метод отключения от сервера со стороны сервера
+     */
+    void disconnectedFromServer();
 }
