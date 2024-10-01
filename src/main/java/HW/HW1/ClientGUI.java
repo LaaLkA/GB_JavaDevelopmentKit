@@ -10,7 +10,7 @@ public class ClientGUI extends JFrame {
     private static final int WINDOW_WIDTH = 230;
     private static final int WINDOW_HEIGHT = 460;
 
-    private ServerWindow serverWindow;
+    private ServerWindow serverWind;
 
     private String userName;
     private String userPassword;
@@ -29,7 +29,7 @@ public class ClientGUI extends JFrame {
     JTextArea areaHistoryOfMessages;
 
     ClientGUI(ServerWindow serverWindow) {
-        this.serverWindow = serverWindow;
+        this.serverWind = serverWindow;
 
         setLocationRelativeTo(serverWindow);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
