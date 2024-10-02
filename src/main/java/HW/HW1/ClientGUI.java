@@ -105,7 +105,8 @@ public class ClientGUI extends JFrame {
 
     public void updateHistoryOfMessages() {
         if (!flagUserAuth) return;
-        historyOfMessages = serverWindow.getHistoryOfMessages();
+        ServerWindow serverWindow;
+//        historyOfMessages = serverWindow.getHistoryOfMessages();
         StringBuilder fullHistoryOfMessagesOnArea = new StringBuilder();
         for (String message : historyOfMessages)
             fullHistoryOfMessagesOnArea.append(message).append("\n");

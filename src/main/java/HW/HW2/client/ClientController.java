@@ -1,6 +1,6 @@
-package Sems.Sem2.HW1_show.client;
+package HW.HW2.client;
 
-import Sems.Sem2.HW1_show.server.ServerController;
+import HW.HW2.server.ServerController;
 
 /**
  * класс содержащий логику работы клиента
@@ -9,10 +9,12 @@ import Sems.Sem2.HW1_show.server.ServerController;
  * @server объект для связи с сервером
  */
 public class ClientController {
-    private boolean connected;
+    private boolean connectStatus;
     private String name;
     private ClientView clientView;
     private ServerController server;
+
+    private StringBuilder historyOfMessages;
 
     //сеттеры
     public void setClientView(ClientView clientView) {
@@ -23,19 +25,18 @@ public class ClientController {
         this.server = server;
     }
 
-    /**
-     * Метод попытки подключения к серверу. Вызывается из GUI
-     * @param name имя пользователя, которым будем подписывать исходящие сообщения
-     * @return ответ от сервера. true, если прошли авторизацию
-     */
+    private void getHistoryOfMessages() {
+        this.historyOfMessages = server.getHistoryMessages();
+    }
+
     public boolean connectToServer(String name) {
         this.name = name;
         if (server.connectUser(this)){
             showOnWindow("Вы успешно подключились!\n");
-            connected = true;
+            connectStatus = true;
             StringBuilder log = server.getHistoryMessages();
             if (log != null){
-                showOnWindow(String.valueOf(log));
+
             }
             return true;
         } else {
@@ -44,50 +45,32 @@ public class ClientController {
         }
     }
 
-    /**
-     * Метод отключения от сервера инициализированное сервером
-     */
     public void disconnectedFromServer() {
-        if (connected) {
-            connected = false;
+        if (connectStatus) {
+            connectStatus = false;
             clientView.disconnectedFromServer();
             showOnWindow("Вы были отключены от сервера!");
         }
     }
 
-    /**
-     * Метод отключения от сервера инициализированное клиентом (например закрыто GUI)
-     */
     public void disconnectFromServer() {
         server.disconnectUser(this);
     }
 
-    /**
-     * Метод, с помощью которого сервер передает клиенту сообщения
-     * @param text текст переданный от сервера
-     */
     public void answerFromServer(String text) {
         showOnWindow(text);
     }
 
-    /**
-     * Метод для передачи сообщения на сервер
-     * @param text текст передаваемого сообщения
-     */
     public void message(String text) {
-        if (connected) {
+        if (connectStatus) {
             if (!text.isEmpty()) {
-                server.message(name + ": " + text);
+                server.addMessage(name + ": " + text);
             }
         } else {
             showOnWindow("Нет подключения к серверу");
         }
     }
 
-    /**
-     * Метод вывода сообщения на GUI
-     * @param text текст, который требуется вывести на экран
-     */
     private void showOnWindow(String text) {
         clientView.showMessage(text);
     }

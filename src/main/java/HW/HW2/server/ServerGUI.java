@@ -1,4 +1,4 @@
-package Sems.Sem2.HW1_show.server;
+package HW.HW2.server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +17,10 @@ public class ServerGUI extends JFrame {
 
     private boolean flagStatusServer;
     private ServerController server;
+
+    public void setServerController(ServerController serverController){
+        this.server = serverController;
+    }
 
     public ServerGUI() {
         setting();

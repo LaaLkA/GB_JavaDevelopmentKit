@@ -1,6 +1,4 @@
-package Sems.Sem2.HW1_show.server;
-
-import java.util.ArrayList;
+package HW.HW2.server;
 
 public class ServerRepository {
     private StringBuilder historyOfMessages;

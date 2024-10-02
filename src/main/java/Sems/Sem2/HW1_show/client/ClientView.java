@@ -1,9 +1,6 @@
 package Sems.Sem2.HW1_show.client;
 
 
-/**
- * Интерфейс описывающий абстракцию GUI
- */
 public interface ClientView {
     /**
      * Метод для отображения сообщения в GUI

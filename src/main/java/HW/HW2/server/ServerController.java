@@ -1,29 +1,27 @@
-package Sems.Sem2.HW1_show.server;
+package HW.HW2.server;
 
-import Sems.Sem2.HW1_show.client.ClientController;
+import HW.HW2.client.ClientController;
 
 public class ServerController {
     private boolean serverStatus;
-
     private ServerRepository serverRepository;
-    private ServerGUI serverGUI;
-
-    public void message(String s) {
-    }
+    private int countUsers;
 
     public boolean connectUser(ClientController clientController) {
-        return false;
+        countUsers++;
+        return true;
     }
 
 
     public void disconnectUser(ClientController clientController) {
+        countUsers--;
+    }
+
+    public void disconnectAllUsers() {
     }
 
     public StringBuilder getHistoryMessages() {
         return serverRepository.getHistory();
-    }
-
-    public void disconnectAllUsers() {
     }
 
     public void clearChatHistory() {
@@ -33,6 +31,7 @@ public class ServerController {
     public void start() {
         serverStatus = true;
         addMessage("Server is ON");
+        countUsers = 0;
     }
 
     public boolean getStatus() {
@@ -48,7 +47,7 @@ public class ServerController {
         serverRepository.addMessage(message);
     }
 
-    public void setServerGUI(ServerGUI serverGUI) {
-        this.serverGUI = serverGUI;
+    public void setServerRepository(ServerRepository serverRepository) {
+        this.serverRepository = serverRepository;
     }
 }

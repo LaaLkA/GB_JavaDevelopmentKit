@@ -1,15 +1,11 @@
-package Sems.Sem2.HW1_show.client;
+package HW.HW2.client;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Класс описывающий работу графического интерфейса приложения.
- * Является абстракцией GUI
- */
-public class ClientGUI extends JFrame implements ClientView{
+public class ClientGUI extends JFrame implements ClientView {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
 
@@ -19,16 +15,8 @@ public class ClientGUI extends JFrame implements ClientView{
     private JButton btnLogin, btnSend;
     private JPanel headerPanel;
 
-    /**
-     * Контроллер, описывающий реакцию на различные события.
-     * Когда что-то происходит, например нажата какая-то кнопка на экране, то обращаемся
-     * к контроллеру и вызываем нужный метод
-     */
     private ClientController clientController;
 
-    /**
-     * Конструктор класса
-     */
     public ClientGUI() {
         setting();
         createPanel();
@@ -41,9 +29,6 @@ public class ClientGUI extends JFrame implements ClientView{
         this.clientController = clientController;
     }
 
-    /**
-     * Настройка основных параметров GUI
-     */
     private void setting() {
         setSize(WIDTH, HEIGHT);
         setResizable(false);
@@ -52,41 +37,24 @@ public class ClientGUI extends JFrame implements ClientView{
         setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
-    /**
-     * Метод вывода текста на экран GUI. Вызывается из контроллера
-     * @param msg текст, который требуется отобразить на экране
-     */
     @Override
     public void showMessage(String msg) {
         log.append(msg + "\n");
     }
 
-    /**
-     * Метод, описывающий отключение клиента от сервера со стороны сервера
-     */
     @Override
     public void disconnectedFromServer(){
         hideHeaderPanel(true);
     }
 
-    /**
-     * Метод, описывающий отключение клиента от сервера со стороны клиента
-     */
     public void disconnectFromServer(){
         clientController.disconnectFromServer();
     }
 
-    /**
-     * Метод изменения видимости верхней панели экрана, на которой виджеты для авторизации (например кнопка логин)
-     * @param visible true, если надо сделать панель видимой
-     */
     public void hideHeaderPanel(boolean visible){
         headerPanel.setVisible(visible);
     }
 
-    /**
-     * Метод, срабатывающий при нажатии кнопки авторизации
-     */
     public void login(){
         if (clientController.connectToServer(tfLogin.getText())){
             headerPanel.setVisible(false);
@@ -99,19 +67,12 @@ public class ClientGUI extends JFrame implements ClientView{
         tfMessage.setText("");
     }
 
-    /**
-     * Метод добавления виджетов на экран
-     */
     private void createPanel() {
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(createLog());
         add(createFooter(), BorderLayout.SOUTH);
     }
 
-    /**
-     * Метод создания панели авторизации
-     * @return возвращает созданную панель
-     */
     private Component createHeaderPanel() {
         headerPanel = new JPanel(new GridLayout(2, 3));
         tfIPAddress = new JTextField("127.0.0.1");
@@ -119,6 +80,7 @@ public class ClientGUI extends JFrame implements ClientView{
         tfLogin = new JTextField("Ivan Ivanovich");
         password = new JPasswordField("123456");
         btnLogin = new JButton("login");
+
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,23 +98,17 @@ public class ClientGUI extends JFrame implements ClientView{
         return headerPanel;
     }
 
-    /**
-     * Метод создания центральной панели, на которой отображается история сообщений
-     * @return возвращает созданную панель
-     */
     private Component createLog() {
         log = new JTextArea();
         log.setEditable(false);
         return new JScrollPane(log);
     }
 
-    /**
-     * Метод создания панели отправки сообщений
-     * @return возвращает созданную панель
-     */
     private Component createFooter() {
         JPanel panel = new JPanel(new BorderLayout());
         tfMessage = new JTextField();
+        btnSend = new JButton("send");
+
         tfMessage.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -161,22 +117,20 @@ public class ClientGUI extends JFrame implements ClientView{
                 }
             }
         });
-        btnSend = new JButton("send");
+
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 message();
             }
         });
+
         panel.add(tfMessage);
         panel.add(btnSend, BorderLayout.EAST);
+
         return panel;
     }
 
-    /**
-     * Метод срабатывающий при важных событиях связанных с графическим окном (например окно в фокусе)
-     * @param e  the window event
-     */
     @Override
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);

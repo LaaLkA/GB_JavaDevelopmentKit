@@ -1,30 +1,29 @@
 package Sems.Sem2.HW1_show;
 
 import HW.HW1.ServerWindow;
+import Sems.Sem2.HW1_show.client.ClientController;
 import Sems.Sem2.HW1_show.client.ClientGUI;
+import Sems.Sem2.HW1_show.client.ClientView;
 import Sems.Sem2.HW1_show.server.ServerController;
+import Sems.Sem2.HW1_show.server.ServerGUI;
+import Sems.Sem2.HW1_show.server.ServerRepository;
 
 public class Main {
     public static void main(String[] args) {
-
-        //создание объектов сервера и создание связи между ними
-        ServerWindow serverWindow = new ServerWindow();
         ServerController serverController = new ServerController();
-        serverController.setServerView(serverWindow);
-        serverWindow.setServerController(serverController);
+        ServerRepository serverRepository = new ServerRepository();
+        ServerGUI serverGUI = new ServerGUI();
+        ClientGUI clientGUI = new ClientGUI();
+        ClientController clientController = new ClientController();
 
-        //создание объектов клиента1 и создание связи между ними
-        ClientGUI clientGUI1 = new ClientGUI();
-        ClientController clientController1 = new ClientController();
-        clientController1.setClientView(clientGUI1);
-        clientGUI1.setClient(clientController1);
-        clientController1.setServer(serverController);
+        // Устанавливаем связи между объектами
+        serverController.setServerGUI(serverGUI);
+        clientController.setClientView(clientGUI);
+        clientController.setServer(serverController);
 
-        //создание объектов клиента2 и создание связи между ними
-        ClientGUI clientGUI2 = new ClientGUI();
-        ClientController clientController2 = new ClientController();
-        clientController2.setClientView(clientGUI2);
-        clientGUI2.setClient(clientController2);
-        clientController2.setServer(serverController);
+        // Дополнительная логика и инициализация
+        serverGUI.setVisible(true);
+        clientGUI.setVisible(true);
+
     }
 }
