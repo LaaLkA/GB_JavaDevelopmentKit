@@ -8,16 +8,21 @@ import HW.HW2.server.ServerRepository;
 
 public class Main {
     public static void main(String[] args) {
-        ServerController serverController = new ServerController();
-        ServerRepository serverRepository = new ServerRepository();
-        ServerGUI serverGUI = new ServerGUI();
+        try {
+            ServerController serverController = new ServerController();
+            ServerRepository serverRepository = new ServerRepository();
+            serverController.setServerRepository(serverRepository);
 
-        ClientGUI clientGUI = new ClientGUI();
-        ClientController clientController = new ClientController();
+            ServerGUI serverGUI = new ServerGUI(serverController);
 
-        serverController.setServerRepository(serverRepository);
-        clientController.setClientView(clientGUI);
-        clientController.setServer(serverController);
+            ClientGUI clientGUI = new ClientGUI();
+            ClientController clientController = new ClientController();
 
+            clientController.setClientView(clientGUI);
+            clientController.setServer(serverController);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

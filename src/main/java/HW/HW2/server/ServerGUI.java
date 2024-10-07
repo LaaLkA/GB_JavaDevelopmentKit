@@ -18,11 +18,8 @@ public class ServerGUI extends JFrame {
     private boolean flagStatusServer;
     private ServerController server;
 
-    public void setServerController(ServerController serverController){
-        this.server = serverController;
-    }
-
-    public ServerGUI() {
+    public ServerGUI(ServerController server) {
+        this.server = server;
         setting();
         createPanel();
 

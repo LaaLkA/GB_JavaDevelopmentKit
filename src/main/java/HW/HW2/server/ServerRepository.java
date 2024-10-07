@@ -3,6 +3,9 @@ package HW.HW2.server;
 public class ServerRepository {
     private StringBuilder historyOfMessages;
 
+    public ServerRepository() {
+        historyOfMessages = new StringBuilder();
+    }
 
     public StringBuilder getHistory() {
         return historyOfMessages;
