@@ -2,12 +2,6 @@ package HW.HW2.client;
 
 import HW.HW2.server.ServerController;
 
-/**
- * класс содержащий логику работы клиента
- *
- * @clientView абстракция графического интерфейса
- * @server объект для связи с сервером
- */
 public class ClientController {
     private boolean connectStatus;
     private String name;
@@ -25,22 +19,20 @@ public class ClientController {
         this.server = server;
     }
 
-    private void getHistoryOfMessages() {
+    public StringBuilder getHistoryOfMessages() {
         this.historyOfMessages = server.getHistoryMessages();
+        return historyOfMessages;
     }
 
     public boolean connectToServer(String name) {
         this.name = name;
-        if (server.connectUser(this)){
-            showOnWindow("Вы успешно подключились!\n");
+        if (server.connectUser(this)) {
+            showOnWindow("You connected!\n");
             connectStatus = true;
             StringBuilder log = server.getHistoryMessages();
-            if (log != null){
-
-            }
             return true;
         } else {
-            showOnWindow("Подключение не удалось");
+            showOnWindow("Connected failed!\n");
             return false;
         }
     }
@@ -49,16 +41,12 @@ public class ClientController {
         if (connectStatus) {
             connectStatus = false;
             clientView.disconnectedFromServer();
-            showOnWindow("Вы были отключены от сервера!");
+            showOnWindow("You was disconnected!\n");
         }
     }
 
     public void disconnectFromServer() {
         server.disconnectUser(this);
-    }
-
-    public void answerFromServer(String text) {
-        showOnWindow(text);
     }
 
     public void message(String text) {
@@ -67,7 +55,7 @@ public class ClientController {
                 server.addMessage(name + ": " + text);
             }
         } else {
-            showOnWindow("Нет подключения к серверу");
+            showOnWindow("Not connected to server!\n");
         }
     }
 

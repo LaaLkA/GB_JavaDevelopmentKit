@@ -12,14 +12,19 @@ public class Main {
             ServerController serverController = new ServerController();
             ServerRepository serverRepository = new ServerRepository();
             serverController.setServerRepository(serverRepository);
-
             ServerGUI serverGUI = new ServerGUI(serverController);
 
             ClientGUI clientGUI = new ClientGUI();
             ClientController clientController = new ClientController();
 
+            clientGUI.setClient(clientController);
+
+
             clientController.setClientView(clientGUI);
-            clientController.setServer(serverController);
+            clientController.
+
+
+                    setServer(serverController);
 
         } catch (Exception e) {
             e.printStackTrace();

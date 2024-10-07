@@ -17,5 +17,6 @@ public class ServerRepository {
 
     public void addMessage(String message) {
         historyOfMessages.append(message).append("\n");
+//        System.out.println(message);
     }
 }

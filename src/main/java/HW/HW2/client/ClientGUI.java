@@ -12,8 +12,8 @@ public class ClientGUI extends JFrame implements ClientView {
     private JTextArea log;
     private JTextField tfIPAddress, tfPort, tfLogin, tfMessage;
     private JPasswordField password;
-    private JButton btnLogin, btnSend;
-    private JPanel headerPanel;
+    private JButton btnLogin, btnSend, btnDisconnect;
+    private JPanel headerPanelConnect, headerPanelDisconnect;
 
     private ClientController clientController;
 
@@ -44,23 +44,27 @@ public class ClientGUI extends JFrame implements ClientView {
 
     @Override
     public void disconnectedFromServer(){
-        hideHeaderPanel(true);
+        hideHeaderConnectPanel(true);
+        hideHeaderDisconnectPanel(false);
     }
 
     public void disconnectFromServer(){
         clientController.disconnectFromServer();
+        disconnectedFromServer();
     }
 
-    public void hideHeaderPanel(boolean visible){
-        headerPanel.setVisible(visible);
+    private void hideHeaderConnectPanel(boolean visible){
+        headerPanelConnect.setVisible(visible);
     }
+
+    private void hideHeaderDisconnectPanel(boolean visible){headerPanelDisconnect.setVisible(visible);}
 
     public void login(){
         if (clientController.connectToServer(tfLogin.getText())){
-            headerPanel.setVisible(false);
+            headerPanelConnect.setVisible(false);
+            headerPanelDisconnect.setVisible(true);
         }
     }
-
 
     private void message(){
         clientController.message(tfMessage.getText());
@@ -68,18 +72,32 @@ public class ClientGUI extends JFrame implements ClientView {
     }
 
     private void createPanel() {
-        add(createHeaderPanel(), BorderLayout.NORTH);
+        add(createHeaderPanelDisconnect(), BorderLayout.NORTH);
+        add(createHeaderPanelConnect(), BorderLayout.NORTH);
         add(createLog());
         add(createFooter(), BorderLayout.SOUTH);
     }
 
-    private Component createHeaderPanel() {
-        headerPanel = new JPanel(new GridLayout(2, 3));
+    private Component createHeaderPanelDisconnect(){
+        btnDisconnect = new JButton("Disconnect");
+        btnDisconnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disconnectFromServer();
+            }
+        });
+        headerPanelDisconnect = new JPanel();
+        headerPanelDisconnect.add(btnDisconnect);
+        return headerPanelDisconnect;
+    }
+
+    private Component createHeaderPanelConnect() {
+        headerPanelConnect = new JPanel(new GridLayout(2, 3));
         tfIPAddress = new JTextField("127.0.0.1");
         tfPort = new JTextField("8189");
-        tfLogin = new JTextField("Ivan Ivanovich");
+        tfLogin = new JTextField("Ivan");
         password = new JPasswordField("123456");
-        btnLogin = new JButton("login");
+        btnLogin = new JButton("Login");
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -88,20 +106,29 @@ public class ClientGUI extends JFrame implements ClientView {
             }
         });
 
-        headerPanel.add(tfIPAddress);
-        headerPanel.add(tfPort);
-        headerPanel.add(new JPanel());
-        headerPanel.add(tfLogin);
-        headerPanel.add(password);
-        headerPanel.add(btnLogin);
+        headerPanelConnect.add(tfIPAddress);
+        headerPanelConnect.add(tfPort);
+        headerPanelConnect.add(new JPanel());
+        headerPanelConnect.add(tfLogin);
+        headerPanelConnect.add(password);
+        headerPanelConnect.add(btnLogin);
 
-        return headerPanel;
+        return headerPanelConnect;
     }
 
     private Component createLog() {
         log = new JTextArea();
         log.setEditable(false);
+        log.setText(getHistoryMessages().toString());
         return new JScrollPane(log);
+    }
+
+    private StringBuilder getHistoryMessages() {
+        if (clientController != null) {
+            return clientController.getHistoryOfMessages();
+        } else {
+            return new StringBuilder("History is clear!\n");
+        }
     }
 
     private Component createFooter() {

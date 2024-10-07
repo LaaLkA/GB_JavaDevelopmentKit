@@ -1,23 +1,29 @@
 package HW.HW2.server;
 
 import HW.HW2.client.ClientController;
+import java.util.ArrayList;
 
 public class ServerController {
     private boolean serverStatus;
     private ServerRepository serverRepository;
     private int countUsers;
+    private ArrayList<ClientController> users = new ArrayList<>();
 
     public boolean connectUser(ClientController clientController) {
+        users.add(clientController);
         countUsers++;
         return true;
     }
 
 
     public void disconnectUser(ClientController clientController) {
+        users.remove(clientController);
         countUsers--;
     }
 
     public void disconnectAllUsers() {
+        users.clear();
+        countUsers = 0;
     }
 
     public StringBuilder getHistoryMessages() {
