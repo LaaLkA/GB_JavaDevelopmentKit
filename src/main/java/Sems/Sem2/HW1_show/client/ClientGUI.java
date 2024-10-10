@@ -93,9 +93,7 @@ public class ClientGUI extends JFrame implements ClientView{
         }
     }
 
-    /**
-     * Метод для отправки сообщения. Используется при нажатии на кнопку send
-     */
+
     private void message(){
         clientController.message(tfMessage.getText());
         tfMessage.setText("");

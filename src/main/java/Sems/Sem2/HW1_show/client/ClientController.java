@@ -33,9 +33,9 @@ public class ClientController {
         if (server.connectUser(this)){
             showOnWindow("Вы успешно подключились!\n");
             connected = true;
-            String log = server.getHistory();
+            StringBuilder log = server.getHistoryMessages();
             if (log != null){
-                showOnWindow(log);
+                showOnWindow(String.valueOf(log));
             }
             return true;
         } else {

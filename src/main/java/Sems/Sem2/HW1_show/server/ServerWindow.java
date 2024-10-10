@@ -67,7 +67,7 @@ public class ServerWindow extends JFrame {
 
     private void answerAll(String text){
         for (ClientGUI clientGUI: clientGUIList){
-            clientGUI.answer(text);
+//            clientGUI.answer(text);
         }
     }
 
