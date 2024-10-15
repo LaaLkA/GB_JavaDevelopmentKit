@@ -32,11 +32,12 @@ public class Program {
 
     public static void minmaxLength(Set<String> names) {
         List<String> res = new ArrayList<>();
+        res.add(names.stream().min(Comparator.comparingInt(String::length)).orElse(null));
         res.add(names.stream().min(Comparator.comparing(String::length)).orElse(null));
         res.add(names.stream().max(Comparator.comparing(String::length)).orElse(null));
         System.out.println("min - max: " + res.get(0) + " " + res.get(1));
     }
     public static void deleteNamesByChar(Set<String> names, char symbol) {
-        names.removeIf(name -> name.contains(String.valueOf(symbol)));
+        names.removeIf(name -> name.contains(String.valueOf(symbol).toLowerCase()));
     }
 }
