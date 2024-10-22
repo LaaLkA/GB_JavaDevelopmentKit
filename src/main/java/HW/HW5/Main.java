@@ -1,5 +1,8 @@
 package HW.HW5;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Пять безмолвных философов  сидят вокруг круглого стола, перед каждым философом стоит тарелка спагетти.
  * Вилки лежат на столе между каждой парой ближайших философов.
@@ -10,4 +13,7 @@ package HW.HW5;
  * Описать в виде кода такую ситуацию - Каждый философ должен поесть три раза
  */
 public class Main {
+    public static void main(String[] args) {
+        List<Philosopher> philosopher = new ArrayList<>();
+    }
 }
