@@ -14,6 +14,30 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        List<Philosopher> philosopher = new ArrayList<>();
+        List<Philosopher> philosophers = new ArrayList<>();
+        List<Fork> forks = new ArrayList<>();
+
+        // Количество философов и вилок
+        int count = 5;
+
+        for (int i = 0; i < count; i++)
+            forks.add(new Fork());
+
+        for (int i = 0; i < count; i++) {
+            Fork leftFork = forks.get(i);
+            Fork rightFork = forks.get((i + 1) % count);
+
+            philosophers.add(new Philosopher(i, leftFork, rightFork));
+            philosophers.get(i).start();
+        }
+
+        for (Philosopher philosopher : philosophers){
+            try {
+                philosopher.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("ALL PHILOSOPHERS POKUSHALI!" );
     }
 }
