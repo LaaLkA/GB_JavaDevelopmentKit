@@ -1,4 +1,4 @@
-package Lects.Lect5.thread;
+package Lects.Lect5;
 
 public class MyThread extends Thread{
     @Override

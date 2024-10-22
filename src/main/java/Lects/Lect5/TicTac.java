@@ -1,4 +1,4 @@
-package Lects.Lect5.thread;
+package Lects.Lect5;
 
 public class TicTac implements Runnable {
     private String bracket;

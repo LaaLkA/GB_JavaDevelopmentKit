@@ -1,4 +1,4 @@
-package Lects.Lect5.thread;
+package Lects.Lect5;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {

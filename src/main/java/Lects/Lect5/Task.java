@@ -1,4 +1,4 @@
-package Lects.Lect5.thread;
+package Lects.Lect5;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,10 +1,7 @@
-package Lects.Lect5.thread;
+package Lects.Lect5;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Show  - CurrentModificationException
